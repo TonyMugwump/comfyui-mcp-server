@@ -49,7 +49,9 @@ This branch has been adapted to include **OpenAPI compatibility** using the Fast
    ```
 
    - The server will listen on `http://localhost:8002`.
-   - OpenAPI documentation is available at `http://localhost:8002/docs`.
+   - OpenAPI documentation is available at:
+     - Swagger UI: `http://localhost:8002/docs`
+     - ReDoc: `http://localhost:8002/redoc`
 
 2. **Test Endpoints**:
    - Use tools like `curl`, Postman, or the FastAPI interactive docs to test the API.
