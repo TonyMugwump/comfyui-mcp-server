@@ -74,7 +74,7 @@ This branch has been adapted to include **OpenAPI compatibility** using the Fast
      1. Ensure OpenWebUI is installed and running.
      2. Add the MCP server as a custom backend in OpenWebUI:
         - Navigate to the **Settings** page in OpenWebUI.
-        - Under the **Custom Backend** section, add the MCP server URL:
+        - Under the **Tools** section, add the MCP server URL:
           ```
           http://localhost:8002
           ```
