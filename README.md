@@ -4,75 +4,71 @@ A lightweight Python-based MCP (Model Context Protocol) server that interfaces w
 
 ## Overview
 
-This project enables AI agents to send image generation requests to ComfyUI using the MCP protocol over WebSocket. It supports:
+This branch has been adapted to include **OpenAPI compatibility** using the FastAPI framework. It provides a RESTful API interface for interacting with ComfyUI, enabling easier integration with external systems and tools. Key features include:
 - Flexible workflow selection (e.g., `basic_api_test.json`).
 - Dynamic parameters: `prompt`, `width`, `height`, and `model`.
+- OpenAPI documentation and schema generation.
 - Returns image URLs served by ComfyUI.
 
 ## Prerequisites
 
 - **Python 3.10+**
 - **ComfyUI**: Installed and running locally (e.g., on `localhost:8188`).
-- **Dependencies**: `requests`, `websockets`, `mcp` (install via pip).
+- **Dependencies**: `fastapi`, `uvicorn`, `pydantic`, `requests`, `websockets`, `mcp` (install via pip).
 
 ## Setup
 
 1. **Clone the Repository**:
+   ```bash
    git clone <your-repo-url>
    cd comfyui-mcp-server
+   ```
 
 2. **Install Dependencies**:
-
-   pip install requests websockets mcp
-
+   ```bash
+   pip install fastapi uvicorn pydantic requests websockets mcp
+   ```
 
 3. **Start ComfyUI**:
-- Install ComfyUI (see [ComfyUI docs](https://github.com/comfyanonymous/ComfyUI)).
-- Run it on port 8188:
-  ```
-  cd <ComfyUI_dir>
-  python main.py --port 8188
-  ```
+   - Install ComfyUI (see [ComfyUI docs](https://github.com/comfyanonymous/ComfyUI)).
+   - Run it on port 8188:
+     ```bash
+     cd <ComfyUI_dir>
+     python main.py --port 8188
+     ```
 
 4. **Prepare Workflows**:
-- Place API-format workflow files (e.g., `basic_api_test.json`) in the `workflows/` directory.
-- Export workflows from ComfyUI’s UI with “Save (API Format)” (enable dev mode in settings).
+   - Place API-format workflow files (e.g., `basic_api_test.json`) in the `workflows/` directory.
+   - Export workflows from ComfyUI’s UI with “Save (API Format)” (enable dev mode in settings).
 
 ## Usage
 
-1. **Run the MCP Server**:
-   python server.py
+1. **Run the OpenAPI MCP Server**:
+   ```bash
+   python openapi_server.py
+   ```
 
-- Listens on `ws://localhost:9000`.
+   - The server will listen on `http://localhost:8002`.
+   - OpenAPI documentation is available at `http://localhost:8002/docs`.
 
-2. **Test with the Client**:
-   python client.py
-
-- Sends a sample request: `"a dog wearing sunglasses"` with `512x512` using `sd_xl_base_1.0.safetensors`.
-- Output example:
-  ```
-  Response from server:
-  {
-    "image_url": "http://localhost:8188/view?filename=ComfyUI_00001_.png&subfolder=&type=output"
-  }
-  ```
+2. **Test Endpoints**:
+   - Use tools like `curl`, Postman, or the FastAPI interactive docs to test the API.
+   - Example: Submit a workflow:
+     ```bash
+     curl -X POST "http://localhost:8002/api/workflow" \
+     -H "Content-Type: application/json" \
+     -d '{
+         "workflow": {"nodes": [...]},
+         "inputs": {"prompt": "a dog wearing sunglasses"}
+     }'
+     ```
 
 3. **Custom Requests**:
-- Modify `client.py`’s `payload` to change `prompt`, `width`, `height`, `workflow_id`, or `model`.
-- Example:
-  ```
-  "params": json.dumps({
-      "prompt": "a cat in space",
-      "width": 768,
-      "height": 768,
-      "workflow_id": "basic_api_test",
-      "model": "v1-5-pruned-emaonly.ckpt"
-  })
-  ```
+   - Modify the payload to change `prompt`, `width`, `height`, `workflow_id`, or `model`.
 
 ## Project Structure
 
-- `server.py`: MCP server with WebSocket transport and lifecycle support.
+- `openapi_server.py`: OpenAPI-compatible MCP server using FastAPI.
 - `comfyui_client.py`: Interfaces with ComfyUI’s API, handles workflow queuing.
 - `client.py`: Test client for sending MCP requests.
 - `workflows/`: Directory for API-format workflow JSON files.
