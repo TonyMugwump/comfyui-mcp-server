@@ -68,6 +68,38 @@ This branch has been adapted to include **OpenAPI compatibility** using the Fast
 3. **Custom Requests**:
    - Modify the payload to change `prompt`, `width`, `height`, `workflow_id`, or `model`.
 
+4. **Using with OpenWebUI**:
+   - OpenWebUI can be configured to interact with this server for workflow execution.
+   - Follow these steps:
+     1. Ensure OpenWebUI is installed and running.
+     2. Add the MCP server as a custom backend in OpenWebUI:
+        - Navigate to the **Settings** page in OpenWebUI.
+        - Under the **Custom Backend** section, add the MCP server URL:
+          ```
+          http://localhost:8002
+          ```
+        - Save the settings.
+     3. Use OpenWebUI’s interface to send requests to the MCP server.
+     4. Select workflows, adjust parameters (e.g., `prompt`, `width`, `height`), and submit jobs directly from OpenWebUI.
+
+### Tools Available in OpenWebUI
+
+Once configured, the following tools will be available in OpenWebUI:
+
+1. **`submit_workflow_api_workflow_post`**  
+   Submit a ComfyUI workflow for processing.
+
+2. **`get_job_status_api_job__job_id__get`**  
+   Get the status of a previously submitted job.
+
+3. **`cancel_job_api_job__job_id__delete`**  
+   Cancel a running job.
+
+4. **`list_models_api_models_get`**  
+   List available models.
+
+![ComfyUI MCP Server Tools](comfy-mcp-server.jpg)
+
 ## Project Structure
 
 - `openapi_server.py`: OpenAPI-compatible MCP server using FastAPI.
