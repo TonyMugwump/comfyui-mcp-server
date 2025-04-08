@@ -1,0 +1,234 @@
+{
+  "4": {
+    "inputs": {
+      "ckpt_name": "SDXL/realisticFreedomSFW_aria.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint - BASE"
+    }
+  },
+  "5": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "(one large sword:1.4), (one weapon:1.4), (left hand empty:1.6), a photorealistic fantasy illustration of Conan the Barbarian standing in a ruined temple at sunset, Conan’s muscular frame is silhouetted against the fading sun, right hand gripping the  handle of large sword in ready stance,  The temple is overgrown with vines, and the air is thick with dust and golden light.  Ichimonji, SwordDisplay, high detail, realistic photo, high detail, digital painting, cinematic, stunning, hyper-realistic, sharp focus, high resolution 8k, insanely detailed",
+      "clip": [
+        "55",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": "(wrong grip:1.5), small sword, several swords, 2 swords, 3 swords, multiple swords, embedding:SDXL/NEGATIVE_HANDS, wrong grip, extra fingers, missing fingers, deformed hands, bad anatomy, fused fingers, wrong grip, floating hands, disconnected hands, mutated hands, furry, monochrome, curvy, watermark, text, whitespace,  signature,  ugly, old, plain background, (disfigured), stumpy, irregular, ugly face, low res, blurry face, pumped body, bad eyes, dot eyes, unfinished, sketch, greyscale, disembodied,  (weird anatomy),  conjoined, mutated, mixed bodied, fused bodies, disembodied, artifacts, jpeg artifacts, empty panel, (deformed), (unfinished), (lots of white-space filling image)",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "10": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 17760004776840,
+      "steps": 30,
+      "cfg": 6,
+      "sampler_name": "dpmpp_3m_sde_gpu",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": 24,
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "55",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced) - BASE"
+    }
+  },
+  "11": {
+    "inputs": {
+      "add_noise": "disable",
+      "noise_seed": 0,
+      "steps": 30,
+      "cfg": 9.5,
+      "sampler_name": "deis",
+      "scheduler": "simple",
+      "start_at_step": 24,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "12",
+        0
+      ],
+      "positive": [
+        "15",
+        0
+      ],
+      "negative": [
+        "16",
+        0
+      ],
+      "latent_image": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced) - REFINER"
+    }
+  },
+  "12": {
+    "inputs": {
+      "ckpt_name": "SDXL/sd_xl_refiner_1.0.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint - REFINER"
+    }
+  },
+  "15": {
+    "inputs": {
+      "text": "(one large sword:1.4), (one weapon:1.4), (sword grip:1.3), detailed fingers, proper sword handling, (anatomically correct grip:1.3), (left hand empty:1.6), big sword, firm grip on sword handle, fingers wrapped around sword handle, proper sword grip, detailed hand pose, ",
+      "clip": [
+        "12",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "16": {
+    "inputs": {
+      "text": "(wrong grip:1.5), small sword, several swords, 2 swords, 3 swords, multiple swords, embedding:SDXL/NEGATIVE_HANDS, extra fingers, missing fingers, deformed hands, bad anatomy, fused fingers, floating hands, disconnected hands, mutated hands, furry, monochrome, curvy, watermark, text, whitespace,  signature,  ugly, old, plain background, (disfigured), stumpy, irregular, ugly face, low res, blurry face, pumped body, bad eyes, dot eyes, unfinished, sketch, greyscale, disembodied,  (weird anatomy),  conjoined, mutated, mixed bodied, fused bodies, disembodied, artifacts, jpeg artifacts, empty panel, (deformed), (unfinished), (lots of white-space filling image)",
+      "clip": [
+        "12",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "17": {
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "12",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "49": {
+    "inputs": {
+      "lora_name": "SDXL/Conan_the_Barbarian.safetensors",
+      "strength_model": 0.9,
+      "strength_clip": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "51": {
+    "inputs": {
+      "images": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "53": {
+    "inputs": {
+      "lora_name": "SDXL/Fantasy_art_XL_V1.safetensors",
+      "strength_model": 0.67,
+      "strength_clip": 0.2,
+      "model": [
+        "49",
+        0
+      ],
+      "clip": [
+        "49",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "55": {
+    "inputs": {
+      "lora_name": "SDXL/Ichimonji.safetensors",
+      "strength_model": 0.45,
+      "strength_clip": 0.2,
+      "model": [
+        "53",
+        0
+      ],
+      "clip": [
+        "53",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  }
+}
